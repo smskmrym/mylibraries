@@ -1,16 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Identity;
 
 namespace mylibraries.Areas.Identity.Data
 {
-    public class ApplicationUser : Controller
+    public class ApplicationUser : IdentityUser
     {
-        public IActionResult Index()
-        {
-            return View();
-        }
+       [PersonalData]
+       [Column(TypeName="nvarchar(100)")]
+       public string FirstName { get; set; }
+       [PersonalData]
+       [Column(TypeName = "nvarchar(100)")]
+       public string LastName { get; set; }
     }
 }
+

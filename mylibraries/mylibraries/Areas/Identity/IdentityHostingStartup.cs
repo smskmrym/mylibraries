@@ -6,6 +6,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using mylibraries.Data;
+using mylibraries.Areas.Identity.Data;
+
 
 [assembly: HostingStartup(typeof(mylibraries.Areas.Identity.IdentityHostingStartup))]
 namespace mylibraries.Areas.Identity
@@ -19,9 +21,14 @@ namespace mylibraries.Areas.Identity
                     options.UseSqlServer(
                         context.Configuration.GetConnectionString("mylibrariesDbContextConnection")));
 
-                services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-                    .AddEntityFrameworkStores<mylibrariesDbContext>();
-            });
+                services.AddDefaultIdentity<IdentityUser>(options =>
+                {
+                    options.SignIn.RequireConfirmedAccount = false;
+                    options.Password.RequireLowercase = false;
+                    options.Password.RequireUppercase = false;
+                })
+                .AddEntityFrameworkStores<mylibrariesDbContext>();
+                });
         }
     }
 }
